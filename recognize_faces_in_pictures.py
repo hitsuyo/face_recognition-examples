@@ -36,7 +36,7 @@ print("Khuôn mặt chưa nhận dạng này có phải là hình của Ob
 print("Khuôn mặt chưa nhận dạng này có phải là một người mới mà "
       "chúng ta chưa từng thấy trước đây ? {}".format(not True in results))
 
-'''
+
 ### main:
 root = tk.Tk()
 root.title("Face Regconition")
@@ -78,4 +78,3 @@ Button(root, text="Exit", width=14, command=close_window).grid(row=9, column=0, 
 ###
 root.mainloop() 
 
-'''

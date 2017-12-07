@@ -2,13 +2,14 @@ import cv2
 import cv2.cv2 as cv
 import sys
 
-cascPath = sys.argv[1]
+#cascPath = sys.argv[2]
+cascPath = 'hasCascade.xml'
 faceCascade = cv2.CascadeClassifier(cascPath)
 
 video_capture = cv2.VideoCapture(0)
 
-# while True:
-while (video_capture.isOpened()):
+while (True) :
+#while (video_capture.isOpened()):
     # Capture frame-by-frame
     ret, frame = video_capture.read()
 
@@ -20,7 +21,7 @@ while (video_capture.isOpened()):
         minNeighbors=5,
         minSize=(30, 30),
         #flags=cv2.cv.CV_HAAR_SCALE_IMAGE,
-        flags = cv2.CV_HAAR_SCALE_IMAGE,
+        flags = cv2.CASCADE_SCALE_IMAGE,
     )
 
     # Draw a rectangle around the faces
@@ -28,7 +29,7 @@ while (video_capture.isOpened()):
         cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
     # Display the resulting frame
-    cv2.imshow('Video', frame)
+    cv2.imshow('frame', gray)
 
     if cv2.waitKey(100) & 0xFF == ord('q'):
         break
