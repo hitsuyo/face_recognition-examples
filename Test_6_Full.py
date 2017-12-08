@@ -6,8 +6,8 @@ import face_recognition
 import urllib
 
 # Đọc 1 hình ảnh vào hệ thống
+#img = cv2.imread('dwayne_johnson.jpg')
 img = cv2.imread('dwayne_johnson.jpg')
-
 cascPath = 'hasCascade.xml'
 faceCascade = cv2.CascadeClassifier(cascPath)
 # Chuyển ảnh ở không gian màu RGB sang ảnh xám
@@ -22,14 +22,9 @@ faces = faceCascade.detectMultiScale(
   flags = cv2.CASCADE_SCALE_IMAGE
 )
 # In ra số lượng khuôn mặt có trong hình
-print ("Tìm thấy {0} khuôn mặt!".format(len(faces)) )
+#print ("Tìm thấy {0} khuôn mặt!".format(len(faces)) )
 
-
-# Draw a rectangle around the faces in the original image
-
-
-
-
+#####################################################################
 
 # Thêm hình ảnh từng người vào mảng numpy để  lưu trữ
 biden_image = face_recognition.load_image_file("biden.jpg")
@@ -37,9 +32,10 @@ obama_image = face_recognition.load_image_file("obama.jpg")
 
 dwayne_johnson_image = face_recognition.load_image_file("dwayne_johnson.jpg")
 
-unknown_image = face_recognition.load_image_file("biden.jpg")
+#
+unknown_image = face_recognition.load_image_file("dwayne_johnson.jpg")
 
-# Get the face encodings for each face in each image file
+# Chuyển hình ảnh thành mã encodings
 
 biden_face_encoding = face_recognition.face_encodings(biden_image)[0]
 obama_face_encoding = face_recognition.face_encodings(obama_image)[0]
@@ -66,6 +62,7 @@ else:
     print("Đây không phải Dwayne Johnson")
 
 #####
+# Draw a rectangle around the faces in the original image
 # Vẽ một khung xung quanh khuôn mặt
 for (x, y, w, h) in faces:
   cv2.rectangle(img, (x, y), (x+w, y+h), (0, 255, 0), 2)
