@@ -19,7 +19,6 @@ while (True) :
     #else:
     #continue
 
-
     faces = faceCascade.detectMultiScale(
         gray,
         scaleFactor=1.1,

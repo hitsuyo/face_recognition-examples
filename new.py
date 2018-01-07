@@ -16,11 +16,12 @@ mark_zuckerberg_image = face_recognition.load_image_file("mark_zuckerberg.jpg")
 # ###################################################
 
 ## Chọn 1 hình ảnh muốn nhận dạng
-image_file =  "dwayne_johnson.jpg"
+#image_file =  "0.jpg"
+#image_file =  "1.jpg"
+#image_file =  "2.jpg"
+#image_file =  "3.jpg"
+image_file =  "4.jpg"
 #image_file =  "biden.jpg"
-#image_file =  "obama.jpg"
-#image_file =  "shinzo_abe.jpg"
-
 #image_file =  "mark_zuckerberg.jpg"  # không có trong dữ liệu encoding
 
 unknown_image = face_recognition.load_image_file(image_file)
@@ -30,7 +31,6 @@ biden_face_encoding = face_recognition.face_encodings(biden_image)[0]
 obama_face_encoding = face_recognition.face_encodings(obama_image)[0]
 dwayne_johnson_encoding = face_recognition.face_encodings(dwayne_johnson_image)[0]
 shinzo_abe_encoding = face_recognition.face_encodings(shinzo_abe_image)[0]
-dwayne_johnson_2_encoding = face_recognition.face_encodings(dwayne_johnson_image)[0]
 
 mark_zuckerberg_encoding = face_recognition.face_encodings(mark_zuckerberg_image)[0]
 
@@ -43,9 +43,6 @@ known_faces = [
     shinzo_abe_encoding,     #2
     dwayne_johnson_encoding  #3
 ]
-data = [
-    (0, "Joe Biden"), "Barack Obama", "Shinzo Abe", "Dwayne Johnson"
-]
 name_data = dict([(0, "Joe Biden"),
                   (1, "Barack Obama"),
                   (2, "Shinzo Abe"),
@@ -57,14 +54,14 @@ name_data = dict([(0, "Joe Biden"),
 results = face_recognition.compare_faces(known_faces, unknown_face_encoding)
 
 # begin Function
-def choose_image(who):
+def show_name(who):
     print("Khuôn mặt này là khuôn mặt của ", who)
     print("Đã ghi nhận")
     return
 # end Function
 #print("{}".format(results[2]))
 # begin Function
-def detect_face(file_name): # truyền tên file khi gọi hàm
+def detect_face( file_name ): # truyền tên file khi gọi hàm
     # Đọc 1 hình ảnh vào hệ thống
     img = cv2.imread(file_name)
     cascPath = 'hasCascade.xml'
@@ -81,49 +78,30 @@ def detect_face(file_name): # truyền tên file khi gọi hàm
     )
     # In ra số lượng khuôn mặt có trong hình
     # print ("Tìm thấy {0} khuôn mặt!".format(len(faces)) )
-    #####
+
     # Vẽ một khung xung quanh khuôn mặt
     for (x, y, w, h) in faces:
         cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
         font = cv2.FONT_HERSHEY_DUPLEX
         for k, v in name_data.items():
-            if (("{}".format(results[3])) == "True"):
-                cv2.putText(img, "Dwayne Johnson", (h + 6, w - 6), font, 1.0, (255, 255, 255), 1)
-            if (("{}".format(results[2])) == "True"):
-                cv2.putText(img, "Shinzo Abe", (h + 6, w - 6), font, 1.0, (255, 255, 255), 1)
-            if (("{}".format(results[1])) == "True"):
-                cv2.putText(img, "Barack Obama", (h + 6, w - 6), font, 1.0, (255, 255, 255), 1)
-            if (("{}".format(results[0])) == "True"):
-                cv2.putText(img, "Joe Biden", (h + 6, w - 6), font, 1.0, (255, 255, 255), 1)
-        cv2.imshow("Faces found", img)
-        cv2.waitKey(0)
+            if(("{}".format(results[k])) == "True" ):
+                cv2.putText(img, str(v), (h + 6, w - 6), font, 1.0, (255, 255, 255), 1)
+                #else:
+                #    cv2.putText(img, "Chua nhan dang", (h + 6, w - 6), font, 1.0, (255, 255, 255), 1)
+            cv2.imshow("Faces found", img)
+            cv2.waitKey(0)
     return
 # end Function detect_face()
 #####################################################################
 # view more in line 47
 for _key, _value in name_data.items():
-    if(("{}".format(results[3])) == "True" ):  # nếu encoding trùng với encoding có index = 3
-        choose_image(who="Dwayne Johnson")
-        #choose_image(who= _value)
+    if(("{}".format(results[_key])) == "True" ):  # nếu encoding trùng với encoding có index = 3
+        show_name(who= _value)
         print (unknown_face_encoding)
-        detect_face(image_file)
-    # print (len(unknown_face_encoding))
-#
-    if(("{}".format(results[2])) == "True" ):
-        choose_image(who="Shinzo Abe")
-        print (unknown_face_encoding)
-        detect_face(image_file)
-    if(("{}".format(results[1])) == "True" ):
-        choose_image(who="Barack Obama")
-        print (unknown_face_encoding)
-        detect_face(image_file)
-    if(("{}".format(results[0])) == "True"):
-        choose_image(who="Joe Biden")
-        print(unknown_face_encoding)
         detect_face(image_file)
     else:
         print()
         print("Khuôn mặt này chưa được nhận dạng !")
         detect_face(image_file)
-#print(dwayne_johnson_2_encoding)
+
 #####################################################################
