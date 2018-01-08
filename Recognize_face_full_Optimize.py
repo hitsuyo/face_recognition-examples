@@ -16,13 +16,12 @@ mark_zuckerberg_image = face_recognition.load_image_file("mark_zuckerberg.jpg")
 # ###################################################
 
 ## Chọn 1 hình ảnh muốn nhận dạng
-#image_file =  "0.jpg"
-#image_file =  "1.jpg"
-#image_file =  "2.jpg"
-#image_file =  "3.jpg"
-image_file =  "4.jpg"
-#image_file =  "biden.jpg"
-#image_file =  "mark_zuckerberg.jpg"  # không có trong dữ liệu encoding
+# image_file =  "0.jpg"
+# image_file =  "1.jpg"
+# image_file =  "2.jpg"
+# image_file =  "3.jpg"
+#image_file =  "5.jpg"
+image_file =  "6.jpg"
 
 unknown_image = face_recognition.load_image_file(image_file)
 
@@ -43,7 +42,7 @@ known_faces = [
     shinzo_abe_encoding,     #2
     dwayne_johnson_encoding  #3
 ]
-name_data = dict([(0, "Joe Biden"),
+name_data = dict([(0, "Joe Biden",),
                   (1, "Barack Obama"),
                   (2, "Shinzo Abe"),
                   (3, "Dwayne Johnson")
@@ -59,7 +58,7 @@ def show_name(who):
     print("Đã ghi nhận")
     return
 # end Function
-#print("{}".format(results[2]))
+
 # begin Function
 def detect_face( file_name ): # truyền tên file khi gọi hàm
     # Đọc 1 hình ảnh vào hệ thống
@@ -76,9 +75,6 @@ def detect_face( file_name ): # truyền tên file khi gọi hàm
         minSize=(30, 30),
         flags=cv2.CASCADE_SCALE_IMAGE
     )
-    # In ra số lượng khuôn mặt có trong hình
-    # print ("Tìm thấy {0} khuôn mặt!".format(len(faces)) )
-
     # Vẽ một khung xung quanh khuôn mặt
     for (x, y, w, h) in faces:
         cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
@@ -86,9 +82,10 @@ def detect_face( file_name ): # truyền tên file khi gọi hàm
         for k, v in name_data.items():
             if(("{}".format(results[k])) == "True" ):
                 cv2.putText(img, str(v), (h + 6, w - 6), font, 1.0, (255, 255, 255), 1)
+                break
         else:
-                cv2.putText(img, "Chua nhan dang", (h + 6, w - 6), font, 1.0, (255, 255, 255), 1)
-        cv2.imshow("Faces found", img)
+            cv2.putText(img, "Khong xac dinh", (h + 6, w - 6), font, 1.0, (255, 255, 255), 1)
+        cv2.imshow("Face Recognition", img)
         cv2.waitKey(0)
     return
 # end Function detect_face()
